@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>트후도 메인 페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0056b3, #004494);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo { font-size: 24px; font-weight: 700; }
+        .welcome {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .welcome img {
+            width: 80px;
+            height: 80px;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .button {
+            background: white;
+            color: #0056b3;
+            padding: 15px;
+            border-radius: 15px;
+            width: 120px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.05);
+        }
+        .button p { margin: 5px 0; font-size: 12px; color: #666; }
+        .status {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 400px;
+            background: #0056b3;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            border-radius: 20px 20px 0 0;
+        }
+        .nav-bar img {
+            width: 30px;
+            filter: invert(1);
+        }
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+        .prudo-ai {
+            animation: wave 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="logo">Prudo</div>
+            <div><img src="bell-icon.png" alt="알림" width="24"></div>
+        </div>
+        <div class="welcome">
+            <img src="prudo-ai.png" alt="트후도 AI" class="prudo-ai">
+            <div>안녕하세요, [이름]님!<br>트후도가 보험을 관리해드려요.</div>
+        </div>
+        <div class="buttons">
+            <div class="button">
+                <div>지금 청구하기</div>
+                <p>병원비 결제 후 자동 처리</p>
+            </div>
+            <div class="button">
+                <div>내 보험 확인</div>
+                <p>실시간으로 업데이트</p>
+            </div>
+            <div class="button">
+                <div>문의하기</div>
+                <p>24/7 AI 지원</p>
+            </div>
+        </div>
+        <div class="status">
+            <p>최근 보험금 입금: 50만원 (3/20)</p>
+            <p>다음 납부일: <span style="color: #FFD700;">4/1</span></p>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <img src="home-icon.png" alt="홈">
+        <img src="doc-icon.png" alt="보험 내역">
+        <img src="clock-icon.png" alt="청구 기록">
+        <img src="gear-icon.png" alt="설정">
+        <img src="chat-icon.png" alt="채팅">
+    </div>
+</body>
+</html>
