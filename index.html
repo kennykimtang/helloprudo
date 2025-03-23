@@ -7,10 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz"></script>
-    <script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.0-min.js.gz"></script>
     <script>
-        window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));
-        window.amplitude.init('2f208641096c446d025155596281d33e', {"autocapture":{"elementInteractions":true}});
+        amplitude.init('2f208641096c446d025155596281d33e', {"autocapture":{"elementInteractions":true}});
     </script>
     <style>
         /* CSS 변수 - 색상 대비 향상 */
@@ -1471,7 +1469,7 @@
 
         <script>
             // Amplitude page_view event
-            amplitude.getInstance().logEvent('page_view', {
+            amplitude.logEvent('page_view', {
                 page_url: window.location.href,
                 referrer: document.referrer,
                 utm_source: new URLSearchParams(window.location.search).get('utm_source'),
@@ -1482,22 +1480,22 @@
             window.addEventListener('scroll', function() {
                 const scrollPercentage = (window.scrollY + window.innerHeight) / document.body.scrollHeight * 100;
                 if (scrollPercentage >= 25) {
-                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '25%' });
+                    amplitude.logEvent('scroll_depth', { scroll_percentage: '25%' });
                 }
                 if (scrollPercentage >= 50) {
-                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '50%' });
+                    amplitude.logEvent('scroll_depth', { scroll_percentage: '50%' });
                 }
                 if (scrollPercentage >= 75) {
-                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '75%' });
+                    amplitude.logEvent('scroll_depth', { scroll_percentage: '75%' });
                 }
                 if (scrollPercentage >= 100) {
-                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '100%' });
+                    amplitude.logEvent('scroll_depth', { scroll_percentage: '100%' });
                 }
             });
 
             // Amplitude email_input_start and email_submitted events
             document.querySelector('input[type="email"]').addEventListener('focus', function() {
-                amplitude.getInstance().logEvent('email_input_start', {
+                amplitude.logEvent('email_input_start', {
                     input_field: 'email',
                     page_url: window.location.href
                 });
@@ -1506,7 +1504,7 @@
             document.querySelector('form').addEventListener('submit', function(event) {
                 const emailInput = event.target.querySelector('input[type="email"]');
                 if (emailInput) {
-                    amplitude.getInstance().logEvent('email_submitted', {
+                    amplitude.logEvent('email_submitted', {
                         input_value: emailInput.value
                     });
                 }
@@ -1515,7 +1513,7 @@
             // Amplitude cta_click event
             document.querySelectorAll('.cta-button').forEach(button => {
                 button.addEventListener('click', function() {
-                    amplitude.getInstance().logEvent('cta_click', {
+                    amplitude.logEvent('cta_click', {
                         button_text: button.innerText,
                         button_id: button.id
                     });
