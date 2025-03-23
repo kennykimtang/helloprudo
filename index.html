@@ -6,6 +6,12 @@
     <title>프루도 - 스마트 보험 관리</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz"></script>
+    <script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.8.0-min.js.gz"></script>
+    <script>
+        window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));
+        window.amplitude.init('2f208641096c446d025155596281d33e', {"autocapture":{"elementInteractions":true}});
+    </script>
     <style>
         /* CSS 변수 - 색상 대비 향상 */
         :root {
@@ -1496,6 +1502,17 @@
                     alert('뉴스레터 구독이 완료되었습니다. 감사합니다!');
                     emailInput.value = '';
                 }
+            });
+            
+            // 가입 버튼 클릭 이벤트 추적
+            document.querySelector('.cta-button').addEventListener('click', function() {
+                amplitude.track('Sign Up', {
+                    user_id: '<INSERT_USER_ID>', // 사용자 ID를 여기에 추가하세요
+                    event_properties: {
+                        button_name: 'Sign Up Button',
+                        page: 'Hero Section'
+                    }
+                });
             });
         </script>
     </body>
