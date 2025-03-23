@@ -16,6 +16,8 @@
             --gradient-start: #2563eb;
             --gradient-end: #3b82f6;
             --accent-color: #f59e0b;
+            --card-bg: #f7f7f7;
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -467,16 +469,17 @@
 
         .service-description {
             font-size: 1.3rem;
-            color: #64748b;
+            color: var(--text-color);
             line-height: 1.8;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0 auto 2rem;
             font-weight: 400;
         }
 
         .service-badges {
             display: flex;
-            gap: 1rem;
+            justify-content: center;
+            gap: 2rem;
             margin-top: 2rem;
         }
 
@@ -484,16 +487,26 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
-            background: #f7f7f7;
-            color: #333;
-            font-size: 1.1rem;
+            background: var(--card-bg);
+            padding: 0.7rem 1.3rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px var(--shadow-color);
         }
 
         .badge i {
+            color: var(--accent-color);
             font-size: 1.2rem;
-            margin-right: 0.2rem;
+        }
+
+        .badge span {
+            font-weight: 500;
+            color: var(--text-color);
         }
 
         @keyframes fadeInUp {
