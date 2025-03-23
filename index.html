@@ -1470,6 +1470,58 @@
         </footer>
 
         <script>
+            // Amplitude page_view event
+            amplitude.getInstance().logEvent('page_view', {
+                page_url: window.location.href,
+                referrer: document.referrer,
+                utm_source: new URLSearchParams(window.location.search).get('utm_source'),
+                device_type: navigator.userAgent
+            });
+
+            // Amplitude scroll_depth event
+            window.addEventListener('scroll', function() {
+                const scrollPercentage = (window.scrollY + window.innerHeight) / document.body.scrollHeight * 100;
+                if (scrollPercentage >= 25) {
+                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '25%' });
+                }
+                if (scrollPercentage >= 50) {
+                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '50%' });
+                }
+                if (scrollPercentage >= 75) {
+                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '75%' });
+                }
+                if (scrollPercentage >= 100) {
+                    amplitude.getInstance().logEvent('scroll_depth', { scroll_percentage: '100%' });
+                }
+            });
+
+            // Amplitude email_input_start and email_submitted events
+            document.querySelector('input[type="email"]').addEventListener('focus', function() {
+                amplitude.getInstance().logEvent('email_input_start', {
+                    input_field: 'email',
+                    page_url: window.location.href
+                });
+            });
+
+            document.querySelector('form').addEventListener('submit', function(event) {
+                const emailInput = event.target.querySelector('input[type="email"]');
+                if (emailInput) {
+                    amplitude.getInstance().logEvent('email_submitted', {
+                        input_value: emailInput.value
+                    });
+                }
+            });
+
+            // Amplitude cta_click event
+            document.querySelectorAll('.cta-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    amplitude.getInstance().logEvent('cta_click', {
+                        button_text: button.innerText,
+                        button_id: button.id
+                    });
+                });
+            });
+
             // 애니메이션 효과
             const animateOnScroll = function() {
                 const elements = document.querySelectorAll('.feature-item, .faq-item, .service-intro');
