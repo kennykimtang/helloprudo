@@ -655,6 +655,109 @@
                 transition: none;
             }
         }
+
+        /* FAQ 섹션 스타일 */
+        .faq {
+            padding: 6rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .faq h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            padding: 0 2rem;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: calc(var(--i, 0) * 0.1s);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px var(--shadow-color);
+        }
+
+        .faq-item h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-left: 2rem;
+            font-weight: 600;
+        }
+
+        .faq-item h3::before {
+            content: "Q";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.6rem;
+        }
+
+        .faq-item p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .faq-item p::before {
+            content: "A";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 1.6rem;
+        }
+
+        @media (max-width: 992px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .faq {
+                padding: 4rem 0;
+            }
+
+            .faq h2 {
+                font-size: 2.4rem;
+                margin-bottom: 3rem;
+            }
+
+            .faq-item h3 {
+                font-size: 1.3rem;
+            }
+
+            .faq-item p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -725,12 +828,94 @@
                     <p>사고 발생 시 즉시 신고하고, 24시간 이내에 보험금을 받아보세요. 프루도의 AI가 모든 과정을 신속하게 처리합니다.</p>
                 </div>
                 <div class="feature-item">
+                    <i class="fas fa-user-cog feature-icon"></i>
+                    <h3>맞춤형 관리</h3>
+                    <p>개인별 보험 분석을 통해 최적의 플랜을 제안하고, 불필요한 보험료 지출을 줄여드립니다. 스마트한 보험 관리의 시작입니다.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-file-contract feature-icon"></i>
+                    <h3>디지털 문서 관리</h3>
+                    <p>종이 서류는 이제 그만! 모든 보험 계약서와 청구 내역을 디지털로 안전하게 보관하고 필요할 때 쉽게 찾아볼 수 있습니다.</p>
+                </div>
+                <div class="feature-item">
                     <i class="fas fa-comments feature-icon"></i>
                     <h3>전문가 상담</h3>
-                    <p>보험 전문가와 실시간 상담이 가능합니다. 복잡한 보험 내용도 쉽게 이해하고 결정할 수 있도록 도와드립니다.</p>
+                    <p>복잡한 보험 질문은 전문가에게 물어보세요. 실시간 채팅으로 보험 전문가와 연결하여 맞춤형 상담을 받을 수 있습니다.</p>
                 </div>
             </div>
         </section>
+
+        <style>
+            /* Features 섹션 스타일 수정 */
+            .features {
+                margin: 6rem auto;
+                max-width: 1200px;
+                padding: 0 2rem;
+            }
+
+            .features h2 {
+                text-align: center;
+                font-size: 2.8rem;
+                color: var(--secondary-color);
+                margin-bottom: 4rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                line-height: 1.3;
+            }
+
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+
+            .feature-item {
+                background: var(--card-bg);
+                padding: 2.5rem;
+                border-radius: 16px;
+                box-shadow: 0 4px 6px var(--shadow-color);
+                transition: all 0.3s ease;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeInUp 0.8s ease forwards;
+            }
+
+            .feature-item:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 12px 20px var(--shadow-color);
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+                color: var(--primary-color);
+                margin-bottom: 1.5rem;
+            }
+
+            .feature-item h3 {
+                font-size: 1.5rem;
+                color: var(--secondary-color);
+                margin-bottom: 1rem;
+                font-weight: 600;
+            }
+
+            .feature-item p {
+                font-size: 1.1rem;
+                color: var(--text-color);
+                line-height: 1.6;
+            }
+
+            @media (max-width: 1200px) {
+                .features-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .features-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
 
         <section class="faq" id="faq">
             <h2>자주 묻는 질문</h2>
@@ -807,137 +992,6 @@
         </footer>
 
         <style>
-            /* Features 섹션 스타일 */
-            .features {
-                margin: 4rem auto;
-                max-width: 1200px;
-                padding: 0 2rem;
-            }
-
-            .features h2 {
-                text-align: center;
-                font-size: 2.8rem;
-                color: var(--secondary-color);
-                margin-bottom: 3rem;
-                font-weight: 700;
-                letter-spacing: -0.02em;
-                line-height: 1.3;
-            }
-
-            .features-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 2rem;
-            }
-
-            .feature-item {
-                background: var(--card-bg);
-                padding: 2.5rem;
-                border-radius: 16px;
-                box-shadow: 0 4px 6px var(--shadow-color);
-                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                opacity: 0;
-                transform: translateY(20px);
-                animation: fadeInUp 0.8s ease forwards;
-            }
-
-            .feature-item:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 12px 20px var(--shadow-color);
-            }
-
-            .feature-icon {
-                font-size: 2.5rem;
-                color: var(--primary-color);
-                margin-bottom: 1.5rem;
-            }
-
-            .feature-item h3 {
-                font-size: 1.5rem;
-                color: var(--secondary-color);
-                margin-bottom: 1rem;
-                font-weight: 600;
-            }
-
-            .feature-item p {
-                font-size: 1.1rem;
-                color: var(--text-color);
-                line-height: 1.6;
-            }
-
-            /* FAQ 섹션 스타일 */
-            .faq {
-                padding: 4rem 0;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-
-            .faq h2 {
-                text-align: center;
-                font-size: 2.8rem;
-                color: var(--secondary-color);
-                margin-bottom: 3rem;
-                font-weight: 700;
-            }
-
-            .faq-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-                gap: 2rem;
-                padding: 0 2rem;
-            }
-
-            .faq-item {
-                background: var(--card-bg);
-                padding: 2rem;
-                border-radius: 16px;
-                box-shadow: 0 4px 6px var(--shadow-color);
-                transition: all 0.3s ease;
-                opacity: 0;
-                transform: translateY(20px);
-                animation: fadeInUp 0.8s ease forwards;
-                animation-delay: calc(var(--i, 0) * 0.1s);
-            }
-
-            .faq-item:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 15px var(--shadow-color);
-            }
-
-            .faq-item h3 {
-                font-size: 1.4rem;
-                color: var(--secondary-color);
-                margin-bottom: 1.2rem;
-                position: relative;
-                padding-left: 1.5rem;
-            }
-
-            .faq-item h3::before {
-                content: "Q";
-                position: absolute;
-                left: 0;
-                top: 0;
-                color: var(--primary-color);
-                font-weight: 700;
-            }
-
-            .faq-item p {
-                font-size: 1.1rem;
-                line-height: 1.6;
-                color: var(--text-color);
-                position: relative;
-                padding-left: 1.5rem;
-            }
-
-            .faq-item p::before {
-                content: "A";
-                position: absolute;
-                left: 0;
-                top: 0;
-                color: var(--accent-color);
-                font-weight: 700;
-            }
-
             /* 푸터 스타일 */
             .footer {
                 background-color: var(--footer-bg);
@@ -959,31 +1013,33 @@
                 background-position: center;
             }
 
-            .footer-grid {
-                display: grid;
-                grid-template-columns: 2fr 1fr 1fr 2fr;
-                gap: 3rem;
+            .footer .container {
                 max-width: 1200px;
                 margin: 0 auto;
                 padding: 0 2rem;
             }
 
+            .footer-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr 2fr;
+                gap: 3rem;
+            }
+
             .footer-info {
                 display: flex;
                 flex-direction: column;
+                gap: 1.5rem;
             }
 
             .footer-logo {
                 font-size: 2rem;
                 font-weight: 700;
-                margin-bottom: 1rem;
                 color: #fff;
             }
 
             .footer-info p {
                 font-size: 1rem;
                 line-height: 1.6;
-                margin-bottom: 1.5rem;
                 opacity: 0.8;
             }
 
@@ -1023,7 +1079,7 @@
             }
 
             .footer-links li {
-                margin-bottom: 0.8rem;
+                margin-bottom: 1rem;
             }
 
             .footer-links a {
@@ -1031,6 +1087,7 @@
                 opacity: 0.8;
                 text-decoration: none;
                 transition: all 0.3s ease;
+                font-size: 1rem;
             }
 
             .footer-links a:hover {
@@ -1060,12 +1117,13 @@
             }
 
             .footer-form input {
-                padding: 0.8rem 1.2rem;
+                padding: 1rem 1.2rem;
                 border-radius: 8px;
                 border: 1px solid var(--input-border);
                 background-color: var(--input-bg);
                 color: var(--input-text);
                 font-size: 1rem;
+                width: 100%;
             }
 
             .footer-form input::placeholder {
@@ -1073,7 +1131,7 @@
             }
 
             .footer-form button {
-                padding: 0.8rem 1.2rem;
+                padding: 1rem 1.2rem;
                 border-radius: 8px;
                 background-color: var(--primary-color);
                 color: white;
@@ -1081,6 +1139,7 @@
                 border: none;
                 cursor: pointer;
                 transition: all 0.3s ease;
+                width: 100%;
             }
 
             .footer-form button:hover {
@@ -1097,18 +1156,16 @@
                 align-items: center;
                 flex-wrap: wrap;
                 gap: 1rem;
-                max-width: 1200px;
-                margin: 4rem auto 0;
-                padding: 2rem 2rem 0;
             }
 
             .footer-bottom p {
                 opacity: 0.6;
+                font-size: 0.9rem;
             }
 
             .footer-bottom-links {
                 display: flex;
-                gap: 1.5rem;
+                gap: 2rem;
             }
 
             .footer-bottom-links a {
@@ -1116,47 +1173,37 @@
                 opacity: 0.6;
                 text-decoration: none;
                 transition: all 0.3s ease;
+                font-size: 0.9rem;
             }
 
             .footer-bottom-links a:hover {
                 opacity: 1;
             }
 
-            @media (max-width: 992px) {
+            @media (max-width: 1200px) {
                 .footer-grid {
                     grid-template-columns: repeat(2, 1fr);
-                }
-
-                .features-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-
-                .faq-grid {
-                    grid-template-columns: 1fr;
+                    gap: 3rem 2rem;
                 }
             }
 
             @media (max-width: 768px) {
-                .footer-grid {
-                    grid-template-columns: 1fr;
-                    gap: 2rem;
+                .footer {
+                    padding: 4rem 0 2rem;
                 }
 
-                .features-grid {
+                .footer-grid {
                     grid-template-columns: 1fr;
+                    gap: 3rem;
                 }
 
                 .footer-bottom {
                     flex-direction: column;
-                    align-items: flex-start;
+                    text-align: center;
                 }
 
-                .faq-item h3 {
-                    font-size: 1.2rem;
-                }
-
-                .faq-item p {
-                    font-size: 1rem;
+                .footer-bottom-links {
+                    justify-content: center;
                 }
             }
         </style>

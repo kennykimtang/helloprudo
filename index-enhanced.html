@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="프루도 - 스마트한 보험 관리 서비스. 복잡한 보험을 간단하게, 프루도가 함께 동행합니다.">
+    <meta name="keywords" content="보험, 보험관리, 스마트보험, 인슈어테크, 핀테크, 프루도">
+    <meta name="author" content="프루도 팀">
+    <meta property="og:title" content="프루도 - 스마트 보험 관리">
+    <meta property="og:description" content="복잡한 보험을 간단하게, 프루도가 함께 동행합니다.">
+    <meta property="og:image" content="images/prudo-og-image.jpg">
+    <meta property="og:url" content="https://prudo.kr">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#2563eb" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1e293b" media="(prefers-color-scheme: dark)">
+    <title>프루도 - 스마트 보험 관리 (실험 버전)</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-color-rgb: 37, 99, 235;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #1e293b;
+            --background-color: #f8fafc;
+            --text-color: #334155;
+            --gradient-start: #2563eb;
+            --gradient-end: #3b82f6;
+            --accent-color: #f59e0b;
+            --card-bg: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.05);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --input-bg: rgba(255, 255, 255, 0.1);
+            --input-text: #ffffff;
+            --input-placeholder: rgba(255, 255, 255, 0.7);
+            --input-border: rgba(255, 255, 255, 0.2);
+            --footer-bg: #1e293b;
+            --footer-text: #e2e8f0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #3b82f6;
+                --primary-color-rgb: 59, 130, 246;
+                --primary-hover: #60a5fa;
+                --secondary-color: #e2e8f0;
+                --background-color: #0f172a;
+                --text-color: #e2e8f0;
+                --gradient-start: #1e3a8a;
+                --gradient-end: #3b82f6;
+                --accent-color: #f59e0b;
+                --card-bg: #1e293b;
+                --border-color: rgba(255, 255, 255, 0.1);
+                --shadow-color: rgba(0, 0, 0, 0.5);
+                --input-bg: rgba(30, 41, 59, 0.8);
+                --input-text: #ffffff;
+                --input-placeholder: rgba(255, 255, 255, 0.5);
+                --input-border: rgba(255, 255, 255, 0.2);
+                --footer-bg: #0f172a;
+                --footer-text: #94a3b8;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* 네비게이션 바 */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .nav-container {
+                background: rgba(15, 23, 42, 0.95);
+            }
+        }
+
+        .nav-container.scrolled {
+            box-shadow: 0 4px 6px -1px var(--shadow-color);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo::before {
+            content: '';
+            display: inline-block;
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-right: 0.5rem;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: translateY(-1px);
+        }
+
+        .nav-logo:hover::before {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            letter-spacing: -0.01em;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-button {
+            padding: 0.8rem 1.6rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+
+        .nav-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
+        }
+
+        .dark-mode-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            color: var(--primary-color);
+            transform: rotate(30deg);
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem;
+            }
+
+            .nav-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="nav">
+            <a href="#" class="nav-logo">Prudo</a>
+            <button class="dark-mode-toggle" aria-label="다크 모드 전환">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="mobile-menu-button">☰</button>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">서비스 소개</a>
+                <a href="#features" class="nav-link">기능</a>
+                <a href="#testimonials" class="nav-link">고객 후기</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#signup" class="nav-button">시작하기</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero-section" id="home">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">더 이상 어렵지 않은<br>보험 관리</h1>
+                    <p class="hero-subtitle">복잡한 보험을 간단하게,<br>프루도가 함께 동행합니다.</p>
+                    <div class="cta-section">
+                        <input type="email" class="email-input" placeholder="이메일 주소를 입력하세요" required>
+                        <button class="cta-button">가입하기</button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">50,000+</div>
+                            <div class="stat-label">가입 회원</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">고객 만족도</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4.9/5</div>
+                            <div class="stat-label">앱 평점</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/hero-image.png" alt="프루도 앱 화면" onerror="this.src='https://via.placeholder.com/500x600/2563eb/ffffff?text=PRUDO+앱+화면'">
+                </div>
+            </div>
+        </section>
+
+        <section class="service-intro" id="about">
+            <h2 class="service-title">보험 가입 후에도 안심하세요</h2>
+            <p class="service-description">보험은 가입이 끝이 아닙니다. 프루도는 보험을 지속적으로 관리하고,<br>필요한 순간 바로 도와드립니다. 서류에 파묻힐 필요 없이, 쉽고 편리하게 관리하세요.</p>
+            <div class="service-badges">
+                <div class="badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>안전한 데이터 보호</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-bolt"></i>
+                    <span>빠른 응답 시간</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-clock"></i>
+                    <span>24/7 고객 지원</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <h2>프루도의 주요 기능</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-robot feature-icon"></i>
+                    <h3>AI 보험 분석</h3>
+                    <p>인공지능이 보험 계약을 분석하여 보장 내용, 중복 보장, 불필요한 보험을 찾아내 최적의 보험 포트폴리오를 제안합니다.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bell feature-icon"></i>
+                    <h3>실시간 알림</h3>
+                    <p>보험료 납부 시기, 갱신 날짜를 실시간으로 알려드려요. 중요한 순간을 놓치지 않도록 프루도가 챙겨드립니다.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-calculator feature-icon"></i>
+                    <h3>자동화된 보험금 정산</h3>
+                    <p>사고 발생 시 즉시 신고하고, 24시간 이내에 보험금을 받아보세요. 프루도의 AI가 모든 과정을 신속하게 처리합니다.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-user-cog feature-icon"></i>
+                    <h3>맞춤형 관리</h3>
+                    <p>개인별 보험 분석을 통해 최적의 플랜을 제안하고, 불필요한 보험료 지출을 줄여드립니다. 스마트한 보험 관리의 시작입니다.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-file-contract feature-icon"></i>
+                    <h3>디지털 문서 관리</h3>
+                    <p>종이 서류는 이제 그만! 모든 보험 계약서와 청구 내역을 디지털로 안전하게 보관하고 필요할 때 쉽게 찾아볼 수 있습니다.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-comments feature-icon"></i>
+                    <h3>전문가 상담</h3>
+                    <p>복잡한 보험 질문은 전문가에게 물어보세요. 실시간 채팅으로 보험 전문가와 연결하여 맞춤형 상담을 받을 수 있습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq" id="faq">
+            <h2>자주 묻는 질문</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>프루도는 어떤 서비스인가요?</h3>
+                    <p>프루도는 보험 관리 서비스로, 보험 계약을 분석하고, 보장 내용을 확인하며, 보험료 납부 시기를 알려드립니다.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>프루도는 어떤 보험을 관리할 수 있나요?</h3>
+                    <p>프루도는 모든 종류의 보험을 관리할 수 있습니다. 보험 계약서를 업로드하시면, 프루도가 자동으로 보험 내용을 분석하여 관리해드립니다.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>프루도는 안전한가요?</h3>
+                    <p>네, 프루도는 안전합니다. 프루도는 보험 계약서와 청구 내역을 안전하게 보관하며, 개인 정보를 보호합니다.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>프루도는 무료인가요?</h3>
+                    <p>네, 프루도는 무료입니다. 프루도는 모든 서비스를 무료로 제공하며, 보험료 납부 시기에 대한 알림도 무료로 제공합니다.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 테스티모니얼 섹션 -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2>고객 후기</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="고객 사진" class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <div class="testimonial-name">김지연</div>
+                            <div class="testimonial-role">회사원, 34세</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">프루도를 사용하기 전에는 내 보험이 어떤 것인지 정확히 모르고 있었어요. 여러 회사 보험을 가입했는데 중복 보장이 많아 불필요한 보험료를 내고 있었네요. 프루도 덕분에 연 100만원 가까이 절약했습니다!</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="고객 사진" class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <div class="testimonial-name">박준호</div>
+                            <div class="testimonial-role">자영업자, 42세</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">사업하느라 바빠서 보험 관리할 시간이 없었는데, 프루도 앱으로 간편하게 모든 보험을 한눈에 볼 수 있어 정말 편리해요. 갱신 알림 덕분에 중요한 시기를 놓치지 않게 되었습니다.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="고객 사진" class="testimonial-avatar">
+                        <div class="testimonial-author">
+                            <div class="testimonial-name">이수진</div>
+                            <div class="testimonial-role">프리랜서, 29세</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">★★★★☆</div>
+                    <p class="testimonial-text">작년에 교통사고가 났을 때 프루도를 통해 보험금 청구를 했어요. 복잡한 서류 작업 없이 앱에서 사진 몇 장 올리고 내용 입력했더니 빠르게 처리해주셨어요. 정말 감사합니다!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* 테스티모니얼 섹션 스타일 */
+        .testimonials {
+            margin: 6rem auto;
+            padding: 4rem 0;
+            background-color: rgba(var(--primary-color-rgb), 0.05);
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px var(--shadow-color);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 3px solid var(--primary-color);
+        }
+
+        .testimonial-author {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .testimonial-stars {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .testimonial-text::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+            position: absolute;
+            top: -1.5rem;
+            left: -0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <style>
+        /* 히어로 섹션 스타일 */
+        .hero-section {
+            text-align: center;
+            padding: 6rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 50%, var(--gradient-start) 100%);
+            overflow: hidden;
+            margin-top: 0;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 150%, rgba(99, 102, 241, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% -50%, rgba(244, 114, 182, 0.3) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%23FFFFFF" fill-opacity="0.05"/></svg>');
+            background-size: 100% 100%, 100% 100%, 20px 20px;
+            opacity: 1;
+            z-index: 1;
+            animation: backgroundMove 30s linear infinite;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(0deg, rgba(37, 99, 235, 0.2) 0%, transparent 100%);
+            z-index: 2;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                background-position: 0% 0%, 0% 0%, 0 0;
+            }
+            100% {
+                background-position: 100% 100%, -100% 100%, 40px 40px;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            min-height: 500px;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-image {
+            flex: 1;
+            max-width: 500px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.2));
+            transition: all 0.5s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image:hover img {
+            transform: translateY(-10px) scale(1.02);
+            filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.3));
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .cta-section {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 1rem 1.6rem;
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            background: var(--input-bg);
+            color: var(--input-text);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .email-input::placeholder {
+            color: var(--input-placeholder);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--input-border);
+            background: var(--input-bg);
+            box-shadow: 0 0 0 4px var(--input-placeholder);
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.6),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 서비스 인트로 섹션 */
+        .service-intro {
+            text-align: center;
+            padding: 6rem 2rem;
+            margin: 4rem auto;
+            max-width: 1000px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            transition: all 0.5s ease;
+        }
+
+        .service-intro:hover {
+            transform: scale(1.02);
+        }
+
+        .service-title {
+            font-size: 2.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .service-description {
+            font-size: 1.3rem;
+            color: var(--text-color);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+        }
+
+        .service-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--card-bg);
+            padding: 0.7rem 1.3rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px var(--shadow-color);
+        }
+
+        .badge i {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        .badge span {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        /* 기능 섹션 */
+        .features {
+            margin: 4rem auto;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.6),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 20px var(--shadow-color);
+        }
+
+        .feature-item:hover::before {
+            left: 100%;
+            transition: 0.5s;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-item p {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+                padding-top: 2rem;
+                min-height: 400px;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .cta-section {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero-image {
+                max-width: 100%;
+                padding: 0 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+                line-height: 1.3;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+                line-height: 1.4;
+            }
+
+            .service-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <style>
+        /* FAQ 섹션 스타일 */
+        .faq {
+            padding: 4rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .faq h2 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 2rem;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: calc(var(--i, 0) * 0.1s);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px var(--shadow-color);
+        }
+
+        .faq-item h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .faq-item h3::before {
+            content: "Q";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .faq-item p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .faq-item p::before {
+            content: "A";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <div class="footer-logo">프루도</div>
+                    <p>복잡한 보험을 간단하게, 프루도가 함께 동행합니다.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="페이스북"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="트위터"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="인스타그램"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="유튜브"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>바로가기</h3>
+                    <ul>
+                        <li><a href="#home">홈</a></li>
+                        <li><a href="#features">주요 기능</a></li>
+                        <li><a href="#testimonials">고객 후기</a></li>
+                        <li><a href="#faq">자주 묻는 질문</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>고객 지원</h3>
+                    <ul>
+                        <li><a href="#">이용 방법</a></li>
+                        <li><a href="#">자주 묻는 질문</a></li>
+                        <li><a href="#">개인정보 처리방침</a></li>
+                        <li><a href="#">이용약관</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>뉴스레터 구독</h3>
+                    <p>보험 정보와 프루도의 새로운 소식을 받아보세요.</p>
+                    <form class="footer-form">
+                        <input type="email" placeholder="이메일 주소를 입력하세요" required>
+                        <button type="submit">구독하기</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 프루도. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">개인정보처리방침</a>
+                    <a href="#">이용약관</a>
+                    <a href="#">쿠키정책</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        /* 푸터 스타일 */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 5rem 0 2rem;
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%231e293b'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%231e293b'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%231e293b'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 3rem;
+        }
+
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-info p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--footer-text);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-newsletter h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .footer-newsletter p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .footer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-form input {
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--input-text);
+            font-size: 1rem;
+        }
+
+        .footer-form input::placeholder {
+            color: var(--input-placeholder);
+        }
+
+        .footer-form button {
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-form button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            opacity: 0.6;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-bottom-links a {
+            color: var(--footer-text);
+            opacity: 0.6;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 992px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+
+    <style>
+        /* 히어로 섹션 스타일 */
+
+    </style>
+
+    <!-- 자바스크립트 -->
+    <script>
+        // 다크 모드 토글 기능
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const htmlElement = document.documentElement;
+        
+        // 시스템 기본 설정 또는 저장된 사용자 기본 설정 확인
+        const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        
+        // 테마 설정
+        if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
+            htmlElement.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+        
+        // 다크 모드 토글 이벤트 리스너
+        darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                htmlElement.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                htmlElement.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // 네비게이션 바 스크롤 이벤트
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // 애니메이션 효과
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.feature-card, .testimonial-card, .faq-item');
+            
+            elements.forEach((element, index) => {
+                element.style.setProperty('--i', index);
+                
+                const elementTop = element.getBoundingClientRect().top;
+                const elementHeight = element.offsetHeight;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - elementHeight / 4) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // 초기 애니메이션 실행
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // 모바일 메뉴 토글
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        
+        // 네비게이션 링크 스크롤 이벤트
+        const navLinks2 = document.querySelectorAll('.nav-links a');
+        navLinks2.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // 모바일 메뉴가 열려있으면 닫기
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                }
+            });
+        });
+        
+        // 카운터 애니메이션
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = Math.round(current).toLocaleString();
+                if (current >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                }
+            }, 20);
+        }
+        
+        // 통계 카운터 애니메이션
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statElements = document.querySelectorAll('.stat-number');
+                    statElements.forEach(element => {
+                        const target = parseInt(element.getAttribute('data-target'));
+                        animateCounter(element, target);
+                    });
+                    statsObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+        
+        // 뉴스레터 폼 제출 이벤트
+        const newsletterForm = document.querySelector('.footer-form');
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[type="email"]');
+            
+            if (emailInput.value) {
+                // 여기서 실제 뉴스레터 구독 API와 연동할 수 있습니다
+                alert('뉴스레터 구독이 완료되었습니다. 감사합니다!');
+                emailInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
