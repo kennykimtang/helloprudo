@@ -45,6 +45,15 @@
                 --section-bg: #1e293b;
                 --heading-color: #f1f5f9; /* 다크모드 제목 색상 강화 */
             }
+            
+            /* 다크모드에서 텍스트 가시성 개선 */
+            .service-title, .features h2, .faq h2 {
+                color: #f1f5f9 !important;
+            }
+            
+            .service-description {
+                color: #cbd5e1 !important;
+            }
         }
 
         /* 모바일에서 네비게이션 고정 및 여백 조정 */
@@ -60,8 +69,15 @@
 
         /* 히어로 섹션 여백 조정 */
         .hero-section {
-            padding-top: 8rem; /* 네비게이션바 높이 고려한 패딩 */
+            padding-top: 6rem; /* 네비게이션바 높이 고려한 패딩 */
             padding-bottom: 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
+            overflow: hidden;
+            margin-top: 0;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
         }
 
         /* 제목 색상 강화 */
@@ -82,8 +98,10 @@
             padding: 5rem 0 2rem;
             margin-top: 6rem;
             position: relative;
-            width: 100%;
-            overflow-x: hidden;
+            width: 100vw; /* 화면 전체 너비로 확장 */
+            margin-left: calc(-50vw + 50%); /* 왼쪽 정렬 보정 */
+            margin-right: calc(-50vw + 50%); /* 오른쪽 정렬 보정 */
+            overflow-x: hidden; /* 내용이 넘치지 않도록 */
             box-sizing: border-box;
         }
 
@@ -98,77 +116,101 @@
         /* 모바일 최적화 추가 개선 */
         @media (max-width: 768px) {
             .hero-section {
-                padding-top: 6rem;
+                padding-top: 6rem; /* 네비게이션바와 hero title 사이 간격 증가 */
                 padding-bottom: 3rem;
             }
             
             .hero-title {
                 font-size: 2.3rem;
                 line-height: 1.3;
-                margin-top: 1rem;
+                margin-top: 0; /* 패딩 조정 */
                 color: var(--heading-color);
+                white-space: normal; /* 텍스트 자연스럽게 줄바꿈 */
             }
             
-            .hero-description {
-                font-size: 1rem;
-                line-height: 1.5;
-                margin-bottom: 2rem;
+            .nav-container {
+                padding: 0.5rem; /* 패딩 감소 */
             }
             
-            .service-intro {
-                padding: 3rem 1.5rem;
-                margin: 2rem auto;
+            .nav {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0.5rem 1rem; /* 패딩 감소 */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
             
-            .service-title {
-                font-size: 2rem;
-                line-height: 1.3;
-                margin-bottom: 1.5rem;
+            .nav-logo {
+                font-size: 1.2rem; /* 로고 크기 축소 */
             }
             
-            .service-description {
-                font-size: 1rem;
-                line-height: 1.5;
+            .nav-links {
+                gap: 0.8rem;
             }
             
-            .features {
-                margin: 3rem auto;
+            .nav-links a {
+                font-size: 0.9rem;
+                padding: 0.3rem; /* 패딩 감소 */
             }
             
-            .feature-item p {
-                color: var(--text-color);
-                font-weight: 400;
-            }
-            
-            .feature-item h3 {
-                color: var(--heading-color);
-            }
-            
-            .faq-item h3 {
-                color: var(--heading-color);
-            }
-            
-            .faq-item p {
-                color: var(--text-color);
-            }
-            
-            /* 푸터 모바일 최적화 */
             .footer {
                 padding: 4rem 0 1.5rem;
-                width: 100vw;
+                width: 100vw; /* 전체 화면 너비 */
+                margin-left: calc(-50vw + 50%); /* 왼쪽 정렬 보정 */
+                margin-right: calc(-50vw + 50%); /* 오른쪽 정렬 보정 */
                 left: 0;
                 right: 0;
                 box-sizing: border-box;
             }
-            
-            .footer .container {
-                padding: 0 1.5rem;
-                width: 100%;
+        }
+
+        /* 모바일에서 한 줄로 줄바꿈 처리 */
+        @media (max-width: 768px) {
+            .hero-title br {
+                display: inline; /* 줄바꿈 표시 */
             }
             
-            .footer-grid {
-                width: 100%;
+            .hero-title {
+                white-space: normal; /* 텍스트 자연스럽게 줄바꿈 */
+                line-height: 1.4; /* 줄 간격 조정 */
             }
+            
+            .service-title br {
+                display: inline; /* 줄바꿈 표시 */
+            }
+        }
+
+        /* 서비스 섹션 스타일 */
+        .service-intro {
+            text-align: center;
+            padding: 6rem 2rem;
+            margin: 4rem auto;
+            max-width: 1000px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            transition: all 0.5s ease;
+            background-color: transparent; /* 회색 박스 제거 */
+        }
+
+        /* 피처 섹션 스타일 */
+        .features {
+            margin: 6rem auto;
+            max-width: 1200px;
+            padding: 0 2rem;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: visible; /* 애니메이션이 잘리지 않도록 변경 */
+        }
+
+        /* FAQ 섹션 스타일 */
+        .faq {
+            padding: 6rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            overflow: hidden; /* 내용이 넘치지 않도록 */
         }
 
         * {
@@ -352,56 +394,6 @@
             height: auto;
         }
 
-        .hero-section {
-            text-align: center;
-            padding: 6rem 0;
-            margin-bottom: 2rem;
-            position: relative;
-            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%);
-            overflow: hidden;
-            margin-top: 0;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 150%, rgba(99, 102, 241, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% -50%, rgba(244, 114, 182, 0.3) 0%, transparent 50%),
-                url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="%23FFFFFF" fill-opacity="0.05"/></svg>');
-            background-size: 100% 100%, 100% 100%, 20px 20px;
-            opacity: 1;
-            z-index: 1;
-            animation: backgroundMove 30s linear infinite;
-        }
-
-        .hero-section::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(0deg, rgba(37, 99, 235, 0.2) 0%, transparent 100%);
-            z-index: 2;
-        }
-
-        @keyframes backgroundMove {
-            0% {
-                background-position: 0% 0%, 0% 0%, 0 0;
-            }
-            100% {
-                background-position: 100% 100%, -100% 100%, 40px 40px;
-            }
-        }
-
         .hero-content {
             position: relative;
             z-index: 3;
@@ -540,7 +532,7 @@
             padding: 0 2rem;
             width: 100%;
             box-sizing: border-box;
-            overflow: hidden; /* 내용이 넘치지 않도록 */
+            overflow: visible; /* 애니메이션이 잘리지 않도록 변경 */
         }
 
         .features h2 {
@@ -626,6 +618,7 @@
             transform: translateY(20px);
             animation: fadeInUp 0.8s ease forwards;
             transition: all 0.5s ease;
+            background-color: transparent; /* 회색 박스 제거 */
         }
 
         .service-intro:hover {
@@ -918,8 +911,11 @@
             padding: 5rem 0 2rem;
             margin-top: 6rem;
             position: relative;
-            width: 100%;
-            overflow: hidden; /* 내용이 넘치지 않도록 */
+            width: 100vw; /* 화면 전체 너비로 확장 */
+            margin-left: calc(-50vw + 50%); /* 왼쪽 정렬 보정 */
+            margin-right: calc(-50vw + 50%); /* 오른쪽 정렬 보정 */
+            overflow-x: hidden; /* 내용이 넘치지 않도록 */
+            box-sizing: border-box;
         }
 
         .footer::before {
@@ -1117,7 +1113,6 @@
 
             .footer-grid {
                 grid-template-columns: 1fr;
-                gap: 3rem;
             }
             
             .footer .container {
@@ -1144,7 +1139,7 @@
         .service-intro {
             padding: 5rem 1rem;
             text-align: center;
-            background-color: var(--section-bg);
+            background-color: transparent; /* 회색 배경 제거 */
         }
 
         .service-badges {
@@ -1281,66 +1276,41 @@
         /* 네비게이션 모바일 최적화 */
         @media (max-width: 768px) {
             .nav-container {
-                padding: 1rem;
+                padding: 0.5rem; /* 패딩 감소 */
+            }
+            
+            .nav {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0.5rem 1rem; /* 패딩 감소 */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
             
             .nav-logo {
-                font-size: 1.5rem;
+                font-size: 1.2rem; /* 로고 크기 축소 */
             }
             
             .nav-links {
-                gap: 1rem;
+                gap: 0.8rem;
             }
             
             .nav-links a {
                 font-size: 0.9rem;
-                padding: 0.5rem;
+                padding: 0.3rem; /* 패딩 감소 */
             }
-        }
-
-        /* 히어로 섹션 모바일 최적화 */
-        @media (max-width: 768px) {
+            
+            /* 히어로 섹션 모바일 조정 */
             .hero-section {
-                padding: 2rem 1.5rem;
-            }
-            
-            .hero-content {
-                flex-direction: column;
-                gap: 3rem;
-            }
-            
-            .hero-text {
-                width: 100%;
-                text-align: center;
+                padding-top: 4rem; /* 상단 패딩 감소 */
             }
             
             .hero-title {
-                font-size: 2.5rem;
+                font-size: 2.2rem; /* 더 작게 조정 */
                 line-height: 1.3;
-            }
-            
-            .hero-description {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
-            
-            .hero-buttons {
-                justify-content: center;
-            }
-            
-            .hero-image {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
-            
-            .hero-image img {
-                max-width: 80%;
-            }
-            
-            .hero-stats {
-                justify-content: center;
-                padding: 1rem 0;
+                margin-top: 0; /* 상단 마진 제거 */
+                padding-top: 0; /* 상단 패딩 제거 */
             }
         }
     </style>
@@ -1376,7 +1346,7 @@
         </section>
 
         <section class="service-intro">
-            <h2 class="service-title">보험 가입 후에도 안심하세요</h2>
+            <h2 class="service-title">보험 가입 후에도<br>안심하세요</h2>
             <p class="service-description">보험은 가입이 끝이 아닙니다. 프루도는 보험을 지속적으로 관리하고,<br>필요한 순간 바로 도와드립니다. 서류에 파묻힐 필요 없이, 쉽고 편리하게 관리하세요.</p>
             <div class="service-badges">
                 <div class="badge">
